@@ -16,6 +16,6 @@ app.get('/',(req,res)=>{
 const routes=require("./router.js")
 app.use('/',routes);
 
-app.listen(5000,()=>{
+app.listen(port,()=>{
 	console.log("server running......");
 })
