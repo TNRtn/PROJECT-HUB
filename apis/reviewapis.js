@@ -30,4 +30,14 @@ const myreview=async(req,res)=>{
 	}
 }
 
-module.exports={addreview,myreview}
+const allreviews=async(req,res)=>{
+	try{
+        let all=await review.find();
+		return res.status(200).json(all);
+	}
+	catch(error){
+		console.log("error found",error);
+		return res.status(400).send("server error ")
+	}
+}
+module.exports={addreview,myreview,allreviews}
