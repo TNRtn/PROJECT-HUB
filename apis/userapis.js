@@ -81,4 +81,36 @@ const me=async(req,res)=>{
 		return res.status(400).send("server error ...");
 	}
 }
-module.exports={uregister,ulogin,uall,me}
+
+
+const addskills = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { email, skills } = req.body;
+
+    // Find the user by email
+    let existingUser = await user.findOne({ email });
+
+    if (!existingUser) {
+      return res.status(404).send("User not found");
+    }
+
+    // Combine existing skills with the new skills
+    const existingSkills = existingUser.skills ? existingUser.skills.split(',').map(skill => skill.trim()) : [];
+    const newSkills = skills.split(',').map(skill => skill.trim());
+    const allSkills = Array.from(new Set([...existingSkills, ...newSkills])).join(',');
+
+    // Update user's skills
+    existingUser.skills = allSkills;
+    await existingUser.save();
+
+    return res.status(200).json({
+      message: "Skills updated successfully",
+      skills: allSkills
+    });
+  } catch (error) {
+    console.log("Error updating skills:", error);
+    return res.status(500).send("Server error");
+  }
+};
+module.exports={uregister,ulogin,uall,me,addskills}
