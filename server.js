@@ -1,9 +1,9 @@
 const express=require('express');
 const app=express();
 const mg=require('mongoose');
-const cors=require('cors');
 let url=require('./urls');
-let port=process.env.PORT || 8080 || 5000 || 3000;
+const cors=require('cors');
+const port=process.env.PORT || 8080 || 5000 || 3000;
 mg.connect(url,{dbName:"hub"}).then(()=>{
 	console.log("connection success...");
 },
