@@ -88,7 +88,7 @@ const me=async(req,res)=>{
 const addskills = async (req, res) => {
   try {
     console.log(req.body);
-    const userId=req.body.userid;
+    const userId=req.body.userId;
     const skills=req.body.skills;
     console.log(userId,skills);
 
