@@ -1,5 +1,6 @@
 const user=require("../model/User");
 const jwt=require("jsonwebtoken");
+const mg=require("mongoose");
 const bcrypt = require('bcrypt');
 const uregister=async(req,res)=>{
 	try{
@@ -83,14 +84,18 @@ const me=async(req,res)=>{
 }
 
 
+
 const addskills = async (req, res) => {
   try {
     console.log(req.body);
-    const { email, skills } = req.body;
+    const userId=req.body.userid;
+    const skills=req.body.skills;
+    console.log(userId,skills);
 
-    // Find the user by email
-    let existingUser = await user.findOne({ email });
-
+    // Validate if userId is a valid ObjectId
+    // Find the user by ID
+    let existingUser = await user.findById(userId);
+    console.log(existingUser,userId)
     if (!existingUser) {
       return res.status(404).send("User not found");
     }
@@ -113,4 +118,5 @@ const addskills = async (req, res) => {
     return res.status(500).send("Server error");
   }
 };
+
 module.exports={uregister,ulogin,uall,me,addskills}
